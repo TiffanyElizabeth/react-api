@@ -30,7 +30,7 @@ export default function App() {
   const [blogsList, setBlogsList] = useState([]);
 
   const fetchPosts = () => {
-    axios.get("http://localhost:3000/posts").then(function (response) {
+    axios.get("http://localhost:3000/posts/").then(function (response) {
       setBlogsList(response.data)
     });
   };
@@ -56,16 +56,19 @@ export default function App() {
   const handleSubmit =
     (e) => {
       e.preventDefault();
-
-      setBlogsList((currentBlogsList) => [...currentBlogsList, formData]);
-
-      setFormData({
-        title: "",
-        creator: "",
-        content: "",
-        category: "",
-        published: false,
+      axios.post("http://localhost:3000/posts", formData).then((response) => {
+        setBlogsList((currentBlogsList) => [...currentBlogsList, response.data]);
+        setFormData({
+          title: "",
+          creator: "",
+          content: "",
+          category: "",
+          published: false,
+        });
       });
+
+
+      /*setBlogsList((currentBlogsList) => [...currentBlogsList, formData]);*/
     };
 
   useEffect(() => {
