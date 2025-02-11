@@ -80,9 +80,13 @@ export default function App() {
   };
 
   const handleDelete = (blogId) => {
-    setBlogsList((currentState) =>
+    axios.delete(`http://localhost:3000/posts/${blogId}`).then(() => {
+      setBlogsList((currentBlogsList) =>
+        currentBlogsList.filter((blog) => blog.id !== blogId));
+    });
+    /*setBlogsList((currentState) =>
       currentState.filter((blog) => blog.id !== blogId)
-    );
+    );*/
   };
 
   return (
